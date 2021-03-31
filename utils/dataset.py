@@ -69,3 +69,8 @@ class BasicDataset(Dataset):
 class CarvanaDataset(BasicDataset):
     def __init__(self, imgs_dir, masks_dir, scale=1):
         super().__init__(imgs_dir, masks_dir, scale, mask_suffix='_mask')
+
+class NematicDataset(BasicDataset):
+    def __init__(self, imgs_dir, masks_dir, scale=1):
+        super().__init__(imgs_dir, masks_dir, scale, mask_suffix='.mask')
+
