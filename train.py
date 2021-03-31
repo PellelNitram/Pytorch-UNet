@@ -14,6 +14,7 @@ from unet import UNet
 
 #from torch.utils.tensorboard import SummaryWriter
 from utils.dataset import BasicDataset
+from utils.dataset import CarvanaDataset
 from torch.utils.data import DataLoader, random_split
 
 dir_img = 'data/imgs/'
@@ -30,7 +31,8 @@ def train_net(net,
               save_cp=True,
               img_scale=0.5):
 
-    dataset = BasicDataset(dir_img, dir_mask, img_scale)
+    #dataset = BasicDataset(dir_img, dir_mask, img_scale)
+    dataset = CarvanaDataset(dir_img, dir_mask, img_scale)
     n_val = int(len(dataset) * val_percent)
     n_train = len(dataset) - n_val
     train, val = random_split(dataset, [n_train, n_val])
