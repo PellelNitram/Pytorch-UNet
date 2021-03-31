@@ -15,7 +15,7 @@ from unet import UNet
 #from torch.utils.tensorboard import SummaryWriter
 from utils.dataset import BasicDataset
 from utils.dataset import CarvanaDataset
-#from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader, random_split
 
 dir_img = 'data/imgs/'
 dir_mask = 'data/masks/'
