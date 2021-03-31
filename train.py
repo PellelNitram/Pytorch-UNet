@@ -21,6 +21,10 @@ dir_img = 'data/imgs/'
 dir_mask = 'data/masks/'
 dir_checkpoint = 'checkpoints/'
 
+dir_img = '/home/s1691089/myScratch/unet_training/imgs/'
+dir_mask = '/home/s1691089/myScratch/unet_training/masks/'
+dir_checkpoint = '/home/s1691089/myScratch/unet_training/checkpoints/'
+
 
 def train_net(net,
               device,
