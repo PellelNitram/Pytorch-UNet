@@ -18,10 +18,6 @@ from utils.dataset import CarvanaDataset
 from utils.dataset import NematicDataset
 from torch.utils.data import DataLoader, random_split
 
-dir_img = '/home/s1691089/myScratch/unet_training/maskRadius0.0/images/'
-dir_mask = '/home/s1691089/myScratch/unet_training/maskRadius0.0/masks/'
-dir_checkpoint = '/home/s1691089/myScratch/unet_training/maskRadius0.0/checkpoints/'
-
 
 def train_net(net,
               device,
@@ -30,7 +26,10 @@ def train_net(net,
               lr=0.001,
               val_percent=0.1,
               save_cp=True,
-              img_scale=0.5):
+              img_scale=0.5,
+              dir_img=None,
+              dir_mask=None,
+              dir_checkpoint=None):
 
     dataset = NematicDataset(dir_img, dir_mask, img_scale)
     n_val = int(len(dataset) * val_percent)
@@ -141,6 +140,12 @@ def get_args():
                         help='Downscaling factor of the images')
     parser.add_argument('-v', '--validation', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
+    parser.add_argument('-di', '--dir-img', type=str, required=True,
+                        help='Folder with images.')
+    parser.add_argument('-dm', '--dir-mask', type=str, required=True,
+                        help='Folder with masks.')
+    parser.add_argument('-dc', '--dir-checkpoint', type=str, required=True,
+                        help='Folder for checkpoints.')
 
     return parser.parse_args()
 
@@ -180,7 +185,11 @@ if __name__ == '__main__':
                   lr=args.lr,
                   device=device,
                   img_scale=args.scale,
-                  val_percent=args.val / 100)
+                  val_percent=args.val / 100,
+                  dir_img=args.dir_img,
+                  dir_mask=args.dir_mask,
+                  dir_checkpoint=args.dir_checkpoint
+                  )
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')
