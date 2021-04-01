@@ -2,6 +2,9 @@ import argparse
 import logging
 import os
 import sys
+from datetime import datetime
+import json
+from path import Path
 
 import numpy as np
 import torch
@@ -149,8 +152,17 @@ def get_args():
 
     return parser.parse_args()
 
+def save_dict(d, path):
+    with open(path, 'w') as f:
+        json.dump(d, f, indent=4)
+
 
 if __name__ == '__main__':
+
+    meta_data = {}
+
+    time_start = datetime.now()
+
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     args = get_args()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -190,9 +202,15 @@ if __name__ == '__main__':
                   dir_mask=args.dir_mask,
                   dir_checkpoint=args.dir_checkpoint
                   )
+        time_end = datetime.now()
+        meta_data['runtime'] = ( time_end - time_start ).total_seconds()
+        save_dict( meta_data, Path(args.dir_checkpoint) / 'meta_data.json' )
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')
+        time_end = datetime.now()
+        meta_data['runtime'] = ( time_end - time_start ).total_seconds()
+        save_dict( meta_data, Path(args.dir_checkpoint) / 'meta_data.json' )
         try:
             sys.exit(0)
         except SystemExit:
