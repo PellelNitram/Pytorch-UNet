@@ -18,14 +18,6 @@ from utils.dataset import CarvanaDataset
 from utils.dataset import NematicDataset
 from torch.utils.data import DataLoader, random_split
 
-dir_img = 'data/imgs/'
-dir_mask = 'data/masks/'
-dir_checkpoint = 'checkpoints/'
-
-dir_img = '/home/s1691089/myScratch/unet_training_Carvana/imgs/'
-dir_mask = '/home/s1691089/myScratch/unet_training_Carvana/masks/'
-dir_checkpoint = '/home/s1691089/myScratch/unet_training_Carvana/checkpoints/'
-
 dir_img = '/home/s1691089/myScratch/unet_training/maskRadius0.0/images/'
 dir_mask = '/home/s1691089/myScratch/unet_training/maskRadius0.0/masks/'
 dir_checkpoint = '/home/s1691089/myScratch/unet_training/maskRadius0.0/checkpoints/'
@@ -40,8 +32,6 @@ def train_net(net,
               save_cp=True,
               img_scale=0.5):
 
-    #dataset = BasicDataset(dir_img, dir_mask, img_scale)
-    #dataset = CarvanaDataset(dir_img, dir_mask, img_scale)
     dataset = NematicDataset(dir_img, dir_mask, img_scale)
     n_val = int(len(dataset) * val_percent)
     n_train = len(dataset) - n_val
